@@ -2,8 +2,24 @@ import { useState } from "react";
 
 function Weather() {
   const [userInput, setUserInput] = useState("");
-  const [unit, setUnit] = useState("")
+  const [unit, setUnit] = useState("");
+  const [weather, setWeather] = useState(null);
+  const [error, setError] = useState(null);
 
+
+  const handleFetch = async () => {
+    try {
+      setError(null);
+      const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?zip=${userInput}&units=${unit.toLocaleLowerCase()}&appid=7a2cd305e0838ab7c51476ec6f9329cb`)
+
+      if (!res.ok) throw new Error("Network error or invalid zip");
+
+      const data = await res.json();
+      setWeather(data);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
 
   return (
     <div>
@@ -56,8 +72,20 @@ function Weather() {
 
         </fieldset>
       </form>
+      <button type="button" onClick={handleFetch}>
+        Get Weather
+      </button>
       <p>Current Zip Code: {userInput}</p>
       <p>Selected Unit: {unit}</p>
+
+      {weather && (
+        <div>
+          <p>Location: {weather.name}</p>
+          <p>Temperature: {weather.main.temp}°</p>
+        </div>
+      )}
+
+      {error && <p style={{ color:"red"}}>{error}</p>}
     </div>
   )
 };
