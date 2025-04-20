@@ -10,7 +10,7 @@ function Weather() {
   const handleFetch = async () => {
     try {
       setError(null);
-      const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?zip=${userInput}&units=${unit.toLocaleLowerCase()}&appid=7a2cd305e0838ab7c51476ec6f9329cb`)
+      const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?zip=${userInput}&units=${unit.toLowerCase()}&appid=${import.meta.env.VITE_WEATHER_API_KEY}`);
 
       if (!res.ok) throw new Error("Network error or invalid zip");
 
