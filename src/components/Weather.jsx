@@ -1,4 +1,5 @@
 import { useState } from "react"; 
+import DisplayWeather from "./DisplayWeather";
 
 function Weather() {
   const [userInput, setUserInput] = useState("");
@@ -78,14 +79,7 @@ function Weather() {
       <p>Current Zip Code: {userInput}</p>
       <p>Selected Unit: {unit}</p>
 
-      {weather && (
-        <div>
-          <p>Location: {weather.name}</p>
-          <p>Temperature: {weather.main.temp}°</p>
-        </div>
-      )}
-
-      {error && <p style={{ color:"red"}}>{error}</p>}
+      <DisplayWeather weather={weather} error={error}/>
     </div>
   )
 };
