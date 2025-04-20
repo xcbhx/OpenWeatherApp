@@ -1,6 +1,7 @@
 import { useState } from "react"; 
 import DisplayWeather from "./DisplayWeather";
 
+
 function Weather() {
   const [userInput, setUserInput] = useState("");
   const [unit, setUnit] = useState("");
@@ -23,8 +24,8 @@ function Weather() {
   };
 
   return (
-    <div>
-      <form>
+    <div className="navbar">
+      <form className="weather-container">
         <label htmlFor="zip">Zip Code</label>
           <input 
           id="zip"
@@ -37,43 +38,20 @@ function Weather() {
         {/* Temperatue Units */}
         <fieldset>
           <legend>Select Temperature Units:</legend>
-
-          <label htmlFor="metric">
-            <input 
-            id="metric"
-            type="radio" 
-            value="Metric"
-            checked={unit === "Metric"}
-            onChange={(e) => setUnit(e.target.value)}
-            />
-            Metric
-          </label>
-
-          <label htmlFor="imperial">
-            <input 
-            id="imperial"
-            type="radio" 
-            value="Imperial"
-            checked={unit === "Imperial"}
-            onChange={(e) => setUnit(e.target.value)}
-            />
-            Imperial
-          </label>
-
-          <label htmlFor="standard">
-            <input 
-            id="standard"
-            type="radio" 
-            value="Standard"
-            checked={unit === "Standard"}
-            onChange={(e) => setUnit(e.target.value)}
-            />
-            Standard
-          </label>
-
+          {["Metric", "Imperial", "Standard"].map((unitOption) => (
+            <label key={unitOption}>
+              <input 
+                type="radio"
+                value={unitOption}
+                checked={unit === unitOption}
+                onChange={(e) => setUnit(e.target.value)}
+              />
+              {unitOption}
+            </label>
+          ))}
         </fieldset>
       </form>
-      <button type="button" onClick={handleFetch}>
+      <button className="fetch-button" type="button" onClick={handleFetch}>
         Get Weather
       </button>
       <p>Current Zip Code: {userInput}</p>
